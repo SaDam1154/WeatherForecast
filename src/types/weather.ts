@@ -21,7 +21,7 @@ export interface ApiResponse {
 // Type cho dữ liệu thời tiết hiện tại nếu cần
 export interface CurrentWeather {
     city: string; // Tên thành phố
-    date: string; // Ngày hiện tại
+    lastUpdated: string; // Ngày hiện tại
     temperature: number; // Nhiệt độ hiện tại (°C)
     wind_speed: number; // Tốc độ gió hiện tại (M/S)
     humidity: number; // Độ ẩm hiện tại (%)
