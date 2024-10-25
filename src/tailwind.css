@@ -12,7 +12,7 @@
 
 @layer components {
     .btn {
-        @apply flex items-center justify-center rounded text-white;
+        @apply flex items-center justify-center rounded text-white transition-transform duration-200 ease-in-out active:scale-95 active:shadow-lg;
     }
     .btn.btn-sm {
         @apply px-4 py-1.5;
@@ -45,6 +45,26 @@
 
     label {
         cursor: pointer;
+    }
+    .text-input {
+        @apply w-full bg-white p-2 text-gray-800 border border-gray-300 rounded transition duration-200 focus:outline-none focus:border-blue-500 focus:bg-white;
+    }
+
+    .text-input:-internal-autofill-selected {
+        @apply bg-white;
+    }
+    /* Styles for the autofilled input fields */
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px white inset; /* Set background color */
+        box-shadow: 0 0 0 30px white inset; /* Set background color */
+        -webkit-text-fill-color: black; /* Set text color */
+    }
+
+    /* Optional: Styles for when the input is selected after autofill */
+    input:-webkit-autofill:-webkit-autofill-selected {
+        background-color: #f3f4f6; /* Set the background color when selected */
+        color: #374151; /* Set the text color when selected */
+        transition: background-color 5000s ease-in-out 0s; /* Prevent background from changing */
     }
 
     input[type='checkbox'] {

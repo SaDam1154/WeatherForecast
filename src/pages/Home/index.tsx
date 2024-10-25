@@ -32,7 +32,6 @@ const Home = () => {
             const parsedData = JSON.parse(weatherData);
             const today = new Date().toDateString(); // Lấy ngày hôm nay
             if (parsedData.date === today) {
-                toast.success('Data has been saved for today!');
                 return parsedData; // Nếu dữ liệu đã tồn tại và là hôm nay, trả về dữ liệu
             }
         }
@@ -58,7 +57,7 @@ const Home = () => {
             // Nếu có dữ liệu, sử dụng dữ liệu từ localStorage
             setCurrentWeather(localWeatherData.currentWeather);
             setForecastWeather(localWeatherData.forecastWeather);
-            showSuccessNoti();
+            toast.success('Display weather information history temporarily!');
             setLoading(false);
             setLoadingSearch(false);
             return; // Kết thúc hàm nếu đã có dữ liệu
@@ -283,10 +282,15 @@ const Home = () => {
                             type='text'
                             name='city'
                             id='city'
-                            className='text-input w-full p-2'
+                            className='text-input'
                             placeholder='Enter city name'
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearch();
+                                }
+                            }}
                         />
                         <span className='select-none text-sm text-red-500'>{errorCity}</span>
                     </div>
@@ -353,10 +357,15 @@ const Home = () => {
                             type='text'
                             name='email'
                             id='email'
-                            className='text-input w-full p-2'
+                            className='text-input'
                             placeholder='Enter email to receive daily weather forecast'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSubscribeEmail();
+                                }
+                            }}
                         />
                         <span className='select-none text-sm text-red-500'>{errorEmail}</span>
                     </div>
