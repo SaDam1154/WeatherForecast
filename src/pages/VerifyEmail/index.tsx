@@ -36,7 +36,7 @@ const VerifyEmail: React.FC = () => {
             setLoading(false);
             setError('No verification token provided.');
         }
-    }, []);
+    }, [token]);
 
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-gray-100'>
