@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const VerifyEmail: React.FC = () => {
+const VerifyEmail = () => {
     const [isVerified, setIsVerified] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
