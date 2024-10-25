@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+    :root {
+        --custom-gray-dark: #6a737b;
+        --custom-gray: #6c757d;
+        --custom-blue: #5372f0;
+        --custom-light-blue: #e3f2fd;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply flex items-center justify-center rounded text-white;
+    }
+    .btn.btn-sm {
+        @apply px-4 py-1.5;
+    }
+    .btn.btn-md {
+        @apply min-w-[150px] px-5 py-2;
+    }
+
+    .btn.btn-red {
+        @apply bg-red-500 hover:bg-red-400;
+    }
+    .btn.btn-border-blue {
+        @apply border border-blue-500 bg-white text-blue-500 hover:bg-blue-100;
+    }
+    .btn.btn-blue {
+        @apply bg-customBlue hover:bg-blue-500;
+    }
+    .btn.btn-gray {
+        @apply bg-customGray hover:bg-gray-400;
+    }
+    .btn.btn-green {
+        @apply bg-green-600 hover:bg-green-500;
+    }
+    .btn.btn-yellow {
+        @apply bg-yellow-600 hover:bg-yellow-500;
+    }
+    .btn:disabled {
+        @apply pointer-events-none opacity-50;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    input[type='checkbox'] {
+        height: 28px;
+        width: 28px;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+
+    .label {
+        @apply inline-block cursor-pointer pb-1 font-semibold text-gray-600;
+    }
+
+    input[type='checkbox'] {
+        height: 28px;
+        width: 28px;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
