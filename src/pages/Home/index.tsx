@@ -158,11 +158,43 @@ const Home = () => {
     const handleUnsubscribeEmail = async () => {
         setLoading(true);
         setLoadingUnSubscrise(true);
+
+        if (!email) {
+            setErrorEmail('Please enter your email');
+            showNotFoundCityNoti();
+            setLoading(false);
+            setLoadingUnSubscrise(false);
+            return;
+        }
+        console.log('search', city);
         try {
-            console.log('trye');
+            // Gửi yêu cầu đăng ký thời tiết
+            const response = await axios.post(
+                'https://weatherforecastbe.onrender.com/api/subscribe/unsub',
+                {
+                    email: email,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            // Kiểm tra thành công và hiển thị thông báo
+            if (response.data.success) {
+                toast.success(response.data.message); // Hiển thị thông báo thành công từ API
+                setErrorEmail('');
+            } else {
+                toast.error(response.data.message); // Hiển thị thông báo lỗi từ API
+                setErrorEmail(response.data.message);
+            }
+        } catch {
+            setErrorEmail('Could not subscribe with this email. Please try again.');
+            toast.error('Could not subscribe with this email. Please try again.'); // Hiển thị thông báo lỗi từ API
         } finally {
             setLoading(false);
-            setLoadingUnSubscrise(false); // Đặt lại trạng thái tải
+            setLoadingUnSubscrise(false);
         }
     };
 
