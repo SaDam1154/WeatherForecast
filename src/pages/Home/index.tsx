@@ -25,6 +25,20 @@ const Home = () => {
     const showNotFoundCityNoti = () => toast.error('City not found!');
     const showNotFoundEmailNoti = () => toast.error('Email not found!');
 
+    // Thêm hàm để kiểm tra dữ liệu trong localStorage
+    const getWeatherFromLocalStorage = (city: string) => {
+        const weatherData = localStorage.getItem(city);
+        if (weatherData) {
+            const parsedData = JSON.parse(weatherData);
+            const today = new Date().toDateString(); // Lấy ngày hôm nay
+            if (parsedData.date === today) {
+                toast.success('Data has been saved for today!');
+                return parsedData; // Nếu dữ liệu đã tồn tại và là hôm nay, trả về dữ liệu
+            }
+        }
+        return null; // Không có dữ liệu cho hôm nay
+    };
+
     const handleSearch = async () => {
         setLoading(true);
         setLoadingSearch(true);
@@ -37,6 +51,19 @@ const Home = () => {
 
             return;
         }
+
+        // Kiểm tra xem có dữ liệu trong localStorage không
+        const localWeatherData = getWeatherFromLocalStorage(city);
+        if (localWeatherData) {
+            // Nếu có dữ liệu, sử dụng dữ liệu từ localStorage
+            setCurrentWeather(localWeatherData.currentWeather);
+            setForecastWeather(localWeatherData.forecastWeather);
+            showSuccessNoti();
+            setLoading(false);
+            setLoadingSearch(false);
+            return; // Kết thúc hàm nếu đã có dữ liệu
+        }
+
         try {
             // Fetch current weather
             const currentResponse = await axios.get<ApiResponse>(`https://weatherforecastbe.onrender.com/api/weather/current?city=${city}`);
@@ -52,6 +79,14 @@ const Home = () => {
                 setForecastWeather(forecastResponse.data.forecastWeather || []);
                 setErrorCity('');
                 showSuccessNoti();
+
+                // Lưu trữ dữ liệu vào localStorage
+                const weatherDataToStore = {
+                    date: new Date().toDateString(), // Lưu ngày
+                    currentWeather: currentResponse.data.currentWeather,
+                    forecastWeather: forecastResponse.data.forecastWeather,
+                };
+                localStorage.setItem(city, JSON.stringify(weatherDataToStore)); // Lưu dữ liệu vào localStorage
             } else {
                 setErrorCity('Weather data not found.');
             }
