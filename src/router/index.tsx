@@ -14,7 +14,7 @@ export const publicRoutes: RouteType[] = [
         component: Home,
     },
     {
-        path: '/VerifyEmail',
+        path: '/VerifyEmail/:token',
         component: VerifyEmail,
     },
 ];

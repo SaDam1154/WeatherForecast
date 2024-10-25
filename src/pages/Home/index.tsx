@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { CurrentWeather, ForecastWeather, ApiResponse } from '../../types/weather';
 import { toast } from 'react-toastify';
+import { removeVietnameseDiacritics } from '../../utils/removeVietnameseDiacritics';
 
 const Home = () => {
     const [city, setCity] = useState('');
@@ -36,7 +37,6 @@ const Home = () => {
 
             return;
         }
-        console.log('search', city);
         try {
             // Fetch current weather
             const currentResponse = await axios.get<ApiResponse>(`https://weatherforecastbe.onrender.com/api/weather/current?city=${city}`);
@@ -83,7 +83,8 @@ const Home = () => {
                         );
                         console.log(locationResponse.data);
                         const cityName = locationResponse.data.results[0].components.city || '';
-                        setCity(cityName); // Cập nhật tên thành phố
+
+                        setCity(removeVietnameseDiacritics(cityName)); // Cập nhật tên thành phố
                     } catch (error) {
                         console.error('Error retrieving city from location:', error);
                         setErrorCity('Error retrieving city from location.');
@@ -124,10 +125,18 @@ const Home = () => {
         console.log('search', city);
         try {
             // Gửi yêu cầu đăng ký thời tiết
-            const response = await axios.post('https://weatherforecastbe.onrender.com/api/subscribe/', {
-                email,
-                city,
-            });
+            const response = await axios.post(
+                'https://weatherforecastbe.onrender.com/api/subscribe/',
+                {
+                    email: email,
+                    city: city,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             // Kiểm tra thành công và hiển thị thông báo
             if (response.data.success) {
